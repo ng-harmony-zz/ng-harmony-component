@@ -1,0 +1,42 @@
+{
+  "name": "ng-harmony-component",
+  "version": "0.1.0",
+  "description": "Dynamic Data, In-Memory DB and auto ajax-propagation",
+  "main": "./dist/es5/system_module.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "literate-programming README.md",
+    "beautify": "sed -i 's/^\\s*//' ./dist/raw/ng_harmony_component.js && js-beautify -m 1 -s 4 -l 0 -p ./dist/raw/ng_harmony_component.js > ./dist/esnext/ng_harmony_component.js",
+    "transpile_amd": "babel --modules amd -e 1 -s -o ./dist/es5/amd_module.js ./dist/esnext/ng_harmony_component.js",
+    "transpile_common": "babel --modules common -e 1 -s -o ./dist/es5/common_module.js ./dist/esnext/ng_harmony_component.js",
+    "transpile_system": "babel --modules system -e 1 -s -o ./dist/es5/system_module.js ./dist/esnext/ng_harmony_component.js",
+    "transpile_umd": "babel --modules umd -e 1 -s -o ./dist/es5/umd_module.js ./dist/esnext/ng_harmony_component.js",
+    "all": "npm run build && npm run beautify && npm run transpile_amd && npm run transpile_common && npm run transpile_system && npm run transpile_umd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ng-harmony/ng-harmony-component.git"
+  },
+  "keywords": [
+    "angular",
+    "angular",
+    "2.0",
+    "annotate",
+    "annotation",
+    "At-Script",
+    "Typescript",
+    "es-next",
+    "harmony"
+  ],
+  "author": "Joehannes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ng-harmony/ng-harmony-component/issues"
+  },
+  "homepage": "https://github.com/ng-harmony/ng-harmony-component",
+  "devDependencies": {
+    "babel": "^5.1.10",
+    "js-beautify": "^1.5.5",
+    "literate-programming": "^0.8.4"
+  }
+}
