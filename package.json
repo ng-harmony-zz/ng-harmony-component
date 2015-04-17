@@ -1,6 +1,6 @@
 {
   "name": "ng-harmony-component",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Dynamic Data, In-Memory DB and auto ajax-propagation",
   "main": "./dist/es5/system_module.js",
   "scripts": {
@@ -40,6 +40,7 @@
     "literate-programming": "^0.8.4"
   },
   "dependencies": {
-    "ng-harmony": "^0.2.0"
+    "ng-harmony": "^0.2.0",
+    "ng-harmony-powercontroller": "^0.1.0"
   }
 }

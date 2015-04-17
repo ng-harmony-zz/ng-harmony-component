@@ -26,6 +26,7 @@ Dependencies/Base-Classes
 
 ```javascript
     import { Srvc, Ctrl } from "ng-harmony";
+    import { PowerCtrl } from "ng-harmony-powercontroller";
 ```
 
 The _DataService_ Class is a starting point for API-consuming Services, that provide linkable Data-Objects
@@ -313,3 +314,11 @@ The actual default _transform_ function - as described at the hook-up-section
     }
     Component.$inject = "$element";
 ```
+An enhanced Component-Variation, enabling the PowerControllers Eventing in the already powerful Ctrl
+```javascript
+    export class PowerComponent extends Component.mixin(PowerCtrl) {}
+```
+
+## CHANGELOG
+
+*0.1.1*: _PowerComponent_: ComponentCtrl with Eventing-Capabilities of the PowerCtrl
