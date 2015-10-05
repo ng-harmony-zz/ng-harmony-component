@@ -27,8 +27,8 @@ To Compile this package please run `npm run all` from a proper shell (on Windows
 Dependencies/Base-Classes
 
 ```javascript
-    import { Srvc, Ctrl } from "ng-harmony";
-    import { PowerCtrl } from "ng-harmony-powercontroller";
+    import { Srvc, Ctrl } from "ng-harmony/ng-harmony";
+    import { PowerCtrl } from "ng-harmony/ng-harmony-powercontroller";
 ```
 
 The _DataService_ Class is a starting point for API-consuming Services, that provide linkable Data-Objects
