@@ -1,61 +1,12 @@
-# Ng-Harmony-Component
-======================
-
-## Development
-
-![Harmony = 6 + 7;](logo.png "Harmony - Fire in my eyes")
-
-The Component is a Controller that integrates with the special DataServices
-
-## Concept
-
-Services abstract away/encapsulate regular/recurring service calls, so code
-isn't duplicated in various controller-spaces, but the actual CRUD is done in a
-central place.
-Since you might still want to transform/adapt your data in an individual way
-I introduce a default naming scheme ... methods to be overridden/specified
-in your own class so the default data is automatically adapted before further
-use.
-
-Use it in conjunction with
-
-* [literate-programming](http://npmjs.org/packages/literate-programming "click for npm-package-homepage") to write markdown-flavored literate JS, HTML and CSS
-* [jspm](https://www.npmjs.com/package/jspm "click for npm-package-homepage") for a nice solution to handle npm-modules with ES6-Module-Format-Loading ...
-## Files
-
-This serves as literate-programming compiler-directive
-
-[build/index.js](#Compilation "save:")
-
-## Compilation
-
-To Compile this package please run `npm run all` from a proper shell (on Windows there's gitbash!);
-
-Dependencies/Base-Classes
-
-```javascript
     import "ng-harmony/ng-harmony-evented";
     import { Mixin } from "ng-harmony/ng-harmony-annotate";
-```
 
-The _Component_ class is building on top of the StatefulController and taking advantage of the DynamicDataService ... it
-* automatically hooks up to all injected DataServices
-* provides for a default data-transformation
-* provides a default css-driving UI/UX-state mechansim
-
-```javascript
     class Base {
         constructor (...args) {
             super(...args);
         }
         initialize (...args) {
-```
 
-Aspect Oriented Feature here.
-You can actually initialize a db-store (api-result-set) with a value or set values each api-cycle
-Syntax is:
-
-```javascript
             this.$scope.model = {};
             this.transform = [{
                 descriptor: "Name", //of DataService without the DataService-suffix
@@ -68,18 +19,12 @@ Syntax is:
                     //{ i: -1, prop: "selected", val: (db, id) -> (db.store.find((el, i, arr) => { return el.id is id; }).special is this.$scope.someConditional }
                 ]
             }];
-```
-The state var is a CSS-state-descriptor/helper
-```javascript
             this.$scope.state = {
                 loading: true,
                 selected: null,
                 busy: null,
                 error: null
             };
-```
-Injecting the aspects defined in this.transform --- default actions for data transformation
-```javascript
             for (let [i, dataset] of this.transform.entries()) {
                 let Service = this[`${dataset.descriptor[0].toUpperCase()}${dataset.descriptor.substr(1)}DataService`];
                 for (let [i, rule] of dataset.init.entries()) {
@@ -89,24 +34,12 @@ Injecting the aspects defined in this.transform --- default actions for data tra
                     Service.aspects(() => { Service.set(rule) });
                 }
             }
-```
-Hooking up the injected DataServices
-* the transform member method is automatically called
-* it has 2 params(descriptor = _Name_ DataService, db = NameDataService.db.store)
-* always call super(descriptor, db) first and return if it returns false -> that's when something didn't work out with the AJAX call and there's nothing to be processed
-* it takes care of a special obj-var "current" which reflects the currently "selected = true" dataset
-```javascript
             for (let [key, Service] of this.constructor.iterate(this)) {
                 if (!/DataService/.test(key)) { continue; }
                 descriptor = key.remove("DataService").toLowerCase();
                 Service.subscribe(this._transform.bind(this, descriptor));
                 if (Service.db && Service.db.ready === true) { Service.digest(); }
             }
-```
-Taking care of the state watchers
-* Applying the state descriptors/names as CSS-classes to the container
-* Emitting an event that bubbles up to the Routing-Controller and allows for global State-Handling
-```javascript
             for (let [k, v] of this.constructor.iterate(this.$scope.state)) {
                 let className = this.$element.className.split(/\s+/);
                 let hasClass = !!~className.indexOf(k);
@@ -124,9 +57,6 @@ Taking care of the state watchers
                 })(k, v, hasClass, className);
             }
         }
-```
-The actual default _transform_ function - as described at the hook-up-section
-```javascript
         _transform (descriptor, db) {
             if (this.$scope.model[descriptor] === undefined || this.$scope.model[descriptor] === null) {
                 this.$scope.model[descriptor] = this[descriptor[1].toUpperCase() + descriptor.substring(1) + "DataService"].db.store;
@@ -165,9 +95,3 @@ The actual default _transform_ function - as described at the hook-up-section
             this.initialize(...args);
         }
     }
-```
-
-## CHANGELOG
-*0.1.1*: _PowerComponent_: ComponentCtrl with Eventing-Capabilities of the PowerCtrl
-*0.2.0*: Refactoring and classifying into Standard/Evented/Routed/Stateful
-*<0.3.0*: Debugging ...
